@@ -1,0 +1,372 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools,sansmath}
+\usepackage{cleveref}
+\usepackage{tikz-cd}
+\usepackage{url}
+
+%Commands
+\newcommand{\claim}{\underline{\textit{Claim:}}\hspace{0,2cm}}
+\newcommand{\subclaim}[1]{\textit{Claim}({#1}):\hspace{0,2cm}}
+\newcommand{\subqed}[1]{\hspace{0,2cm}\textsf{qed}({#1})}
+\newcommand{\subproof}[1]{\textit{proof}({#1}).\hspace{0,1cm}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\makeatletter
+\def\fall#1{\forall #1\@ifnextchar\bgroup{\,\fall}{:\,}}
+\makeatother
+\renewcommand{\S}[1]{\mathbb{S}^{#1}}
+\newcommand{\T}[1]{\mathbb{T}^{#1}}
+\renewcommand{\O}{\mathcal{O}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\pr}{\mathrm{pr}}
+\newcommand{\foukof}[1]{\hat{\varphi}_{{#1}}}
+\newcommand{\e}[1]{\mathsf{e}^{#1}}
+\renewcommand{\i}{\mathsf{i}}
+%Umgebungen
+\newtheorem{thm}{Theorem}[section] 
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem*{silentdefn}{Definition}
+\newtheorem*{silentthm}{Theorem}
+\newtheorem*{silentlem}{Lemma}
+\theoremstyle{plain}
+\newtheorem{cor}[thm]{Korollar}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{propo}[thm]{Proposition}
+\newtheorem{axiom}[thm]{Axiom}
+\theoremstyle{remark}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{example}[thm]{Example}
+
+%Aufgaben-Command
+\newcommand{\aufgabe}[1]{
+	{
+		\vspace*{0.5cm}
+		\textsf{\textbf{Exercise #1}}
+		\vspace*{0.2cm}
+
+	}
+}
+%unteraufgabe
+\newcommand{\unteraufgabe}[1]{
+	{
+		\vspace*{0.2cm}
+\noindent\textsf{(#1)}
+}
+}
+%Teilaufgabe
+\newcommand{\teilaufgabe}[1]{
+	{
+\noindent 
+\vspace*{0.2cm}
+\hspace*{0,1 cm}
+\textsf{#1)}
+}
+}
+
+\newcommand{\induktionsanfang}{
+	{
+		\vspace*{0.1cm}
+		\noindent
+		\textsf{Induktionsanfang:}
+	}
+}
+
+\newcommand{\induktionsschritt}{
+	{
+		\vspace*{0.1cm}
+		\noindent
+		\textsf{Induktionsschritt:}
+	}
+}
+
+\title{Homework No.1}
+\author{Philipp Stassen}
+\begin{document}
+\maketitle
+\aufgabe1
+Show that if $f:[a,b]\rightarrow[a,b]$ is a homeomorphism, then $f$ has no periodic points with period $3$ or larger.
+\begin{proof}
+	First note that $f$ is strictly monotone as otherwise there would be unequal $x,y\in [a,b]$ such that $f(x)=f(y)$ contradicting bijectivity.
+
+	Therefore we only have to consider two cases. \\
+\textbf{Case 1:} $f$ is increasing.
+
+Let $x \in [a,b]$ and $\O(x)=\{f^n(x)|n\in\N\}$ be the Orbit of $x$ with respect to $f$. 
+The sequence $\{f^n(x)\}_{n\in\N}$ is increasing. Hence, if $x$ is of period $n$ then we would have $x \leq f(x) \leq ... \leq f^n(x) = x$. Note that the inequalities have to be strict: If there was an $i<n$ such that $f\circ f^i(x) = f^i(x)$ then of course $f^n(x) = f^{n-i}(x)\circ f^i(x)= f^i(x)$ and $x$ would have period $i < n$.
+Therefore, the inequalities are strict and we have $x < f(x) < ... < f^n(x) = x$, which is only satisfiable for $n=1$. 
+
+We can conclude that if $f$ is increasing it has no periodic points with period $2$ or larger.
+
+
+\textbf{Case 2:} $f$ is decreasing.
+
+Then $f^2$ is increasing. Assume $x$ had period $n > 2$. We have to distinguish two cases. 
+
+\textbf{Case 2a:} $n$ is even.
+
+There exists an $m\in\N$ such that $2m = n$. Thus we have $x = f^n(x) = (f^2)^m(x) = f^2 (x)$ as $f^2$ is increasing and thus - by Case 1 - the periodic point $x$ (of $f^2$) must have period 1. This contradicts the assumption that $x$ is a periodic point (of $f$) with period $n > 2$.
+
+\textbf{Case 2b:} $n$ is odd.
+
+We can take $m\in \N$ such that $2m = n+1$. If $x = f^n(x)$ then clearly $f(x) = f\circ f^n (x)$. Then we have $f(x) = (f^2)^m (x) = f^2(x)$. Therefore, since $x$ is an periodic point, it must be the case that $x = f(x)$. This contradicts again the assumption that $x$ is a periodic point with period $n > 2$.
+\end{proof}
+\aufgabe2 
+We define $\S1 = \mathbb{R}/\Z$.
+\claim The set of periodic points of the expanding map $E_m$ is dense in $\S1$.
+\begin{proof}
+%	We can identify the $\S1$ with the set of sequences $\Sigma_{m}^{+} = \{1,2,..., m\}^{\N}$ on the $m$-ary number alphabet by representing each number of $[0,1)$ by its base-$m$ representation.
+%	Now \\
+%
+%\begin{figure}[h]
+%	\centering
+%\begin{tikzcd}[row sep=5em, column sep = 6em]
+%	\Sigma_{m}^{+}
+%	\arrow[r,"\sigma"]
+%	\arrow[d,"h"]
+%	&	\Sigma_{m}^{+}
+%	\arrow[d,"h"]  \\
+%	\S1
+%	\arrow[r,"E_2"]
+%	&	\S1
+%\end{tikzcd}
+%\end{figure}
+%	This diagram commutes for the semi-conjugacy 
+%	\begin{align}
+%		&h:\Sigma_{m}^{+}\rightarrow \S1 \\
+%		&h(i_1i_2 ...) = \sum_{i=1}^{n}(i_n-1)2^{-n}=0.(i_1-1)(i_2-1)
+%	\end{align}
+%	and the shift-map 
+%	\begin{align}
+%		&\sigma_m:\Sigma_{m}^{+}\rightarrow \Sigma_{m}^{+} \\
+%		&\sigma_m(i_1i_2...) = i_{m+1}i_{m+2}...
+%	\end{align}
+%	as we have shown in the lecture.
+%	As $\Sigma_{m}^{+}$ and $\S1$ are conjugate the periodic points of $\Sigma_{m}^{+}$ are precisely the one of $ \S1$ carried over by the conjugacy $H$.
+%	Hence, it suffices to compute the periodic points of $\Sigma_{m}^{+}$. 
+%\medskip
+
+	The periodic points of $E_m$ are precisely the points $x$ such that $E_{m}^k(x) = x$ for some $k\in \N$ that is 
+	\begin{align}
+		(m^k-1) \cdot x \in \Z \text{ for some }k\in \N.
+	\end{align}
+	or equivalently
+	\begin{align}
+		x = \frac{p}{m^k-1} \text{ for }p\in\Z.
+	\end{align}
+Thus, the set $D=\{\frac{p}{m^k-1}|p\in \Z \wedge k\in \N\}$ is the set of periodic points.
+
+$D$ is dense in $\S1$, for any $\epsilon$ we can choose a $k'\in \N$ such that $\frac{1}{m^{k'}-1}<\epsilon$.Then we can cover the $\S1$ with $\epsilon$-Balls while each of it contains an element of the form $\frac{p}{m^{k}-1}$.
+This proves the density of $D$.
+\end{proof}
+
+\aufgabe3 Let $f:X\rightarrow X$ and $g:Y\rightarrow Y$ be topologically semi-conjugate via $\phi:X\rightarrow Y$ as illustrated in the following commuting diagram.
+\begin{figure}[h]
+	\centering
+\begin{tikzcd}[row sep=5em, column sep = 6em]
+	X
+	\arrow[r,"f"]
+	\arrow[d,"\phi"]
+	&	X
+	\arrow[d,"\phi"]  \\
+	Y
+	\arrow[r,"g"]
+	&	Y
+\end{tikzcd}
+\end{figure}
+
+\teilaufgabe{a} 
+
+\claim If $f:X\rightarrow X$ is topologically transitive then $g:Y\rightarrow Y$ is topologically transitive. 
+\begin{proof}
+	Assume that $f$ is topologically transitive. Let $\O(x)$ be a dense Orbit of $f$. 
+	\claim $\O(\phi(x))$ is a dense Orbit of $g$.
+	Fix an arbitrary $y\in Y$ and an arbitrary open surrounding $U$ of $y$. As $\phi$ is continuous and onto we have that $\phi^{-1}(U)$ is an non-empty and open superset of $\phi^{-1}(y)$. \\
+	Since $\O(x)$ is dense we can take $z\in \phi^{-1}(U)\cap\O(x)$ and additionally an $n\in\N$ such that $f^n(y)=z$ (by $z \in \O(x)$). \\
+	Hence, we have that $\phi\circ f^n(y) \in U$.
+	\medskip
+
+	To finally conclude the claim we need to to show that there is an $n\in \N$ such that $g^n(\phi(x))\in U$.
+	
+	Hence, observe 
+	\begin{align}
+		g^n\circ \phi(x) = \phi \circ f^n(x)
+	\end{align}
+	This is however an immediate consequence of $\phi$ being a semi-conjugacy; we can just iteratively use the identity $g\circ\phi (x) =\phi\circ f(x)$ n times and get the result. \\
+\end{proof}
+\aufgabe4 Let $\alpha \in \R$ and 
+\begin{align}
+	F_{\alpha}:& \T2\rightarrow\T2 \\
+		   & (x,y)\mapsto (x+\alpha \mod 1, x+y \mod 1)
+\end{align}
+with the usual identification $\T2 = [0,1]^2/\tilde = \R^2/\Z^2$. \\
+$\mathrm{pr}_1:\T2 \rightarrow \S1$ is a semi-conjugacy:
+\begin{figure}[h]
+	\centering
+\begin{tikzcd}[row sep=5em, column sep = 6em]
+	\T2
+	\arrow[r,"F_{\alpha}"]
+	\arrow[d,"\mathrm{pr}_1"]
+	&	\T2
+	\arrow[d,"\mathrm{pr}_1"]  \\
+	\S1
+	\arrow[r,"R_{\alpha}"]
+	&	\S1
+\end{tikzcd}
+\end{figure}
+
+\teilaufgabe{a}
+
+\unteraufgabe{i}
+
+As $\pr$ is a semi-conjugacy we know that for $F_{\alpha}$ to be topologically transitive $\alpha$ has to be \textbf{necessarily} irrational. If there was a rational $\alpha$ such that $F_{\alpha}$ was topologically transitive we could conclude that $R_{\alpha}$ was topologically transitive as well as $\T2$ and $\S1$ are topologically semi-conjugate. 
+This is however not the case, as we have shown in the lecture.
+
+\claim For $F_{\alpha}$ to be topologically transitive it is also \textbf{sufficient} that $\alpha$ is irrational.
+\begin{proof}
+	Let $\varphi:\T2\rightarrow \R$ be an observable.
+	As $\varphi \in \mathcal{L}^2(\T2)$ we can define its fourier-coefficients and its fourierseries:
+	\begin{align}
+		\sum \hat{\varphi}_{\bar{n}} \e{2\pi\i\bar{n}\cdot(x,y)}.
+	\end{align}
+	As $\varphi$ is by assumption $F_{\alpha}$ invariant we have that $\varphi(F_{\alpha}(x,y)) =\varphi (x,y)$ and thus
+	\begin{align}
+		\sum \foukof{\bar{n}}\e{2\pi\i\bar{n}\cdot(x+\alpha,x+y)} 	&= \sum \foukof{\bar{n}}\e{2\pi\i(n_1+n_2,n_2)\cdot(x,y)} \e{2\pi\i\bar{n}\cdot(\alpha,0)} \\
+										&= \sum \foukof{\bar{n}}\e{2\pi\i\bar{n}\cdot(x,y)}
+	\end{align}
+	Therefore, by the uniqueness of the fourier-coefficients we must have that
+	\begin{align}
+		\foukof{n_1+n_2,n_2} = \foukof{n_1,n_2}\e{2\pi\i n_1\alpha}
+	\end{align}
+We can distinct to cases:
+\textbf{Case 1:} $n_2 = b \neq 0$ 
+
+We have that $|\foukof{n_1 +kb, b}| = |\foukof{n_1,n_2}|$ for arbitrary $k\in \N$. 
+By the \emph{Riemann-Lebesgue Lemma}\footnote{https://de.wikipedia.org/wiki/Lemma\_von\_Riemann-Lebesgue} the Fourier-Coefficients must decay for $|| (n_1 + kb, b) || \rightarrow \infty$. Hence, we $\foukof{n_1 + kb ,b} = 0$ for all $k\in \N$.
+
+\noindent \textbf{Case 2:} $n_2 = 0$
+
+We have that $\foukof{n_1,0} = \foukof{n_1,0} \e{2\pi\i n_1\alpha}$ with $\alpha$ being irrational. Therefore, either $\foukof{n_1,0} = 0$ or $n_1 = 0$. 
+This implies that $\varphi$ is constant and as $\varphi$ was an arbitrary observable this holds for all observables.  
+By a theorem of the lecture we know that now $F_{\alpha}$ has to be topologically transitive.
+\end{proof}
+\unteraufgabe{ii} $F_{\alpha}$ is minimal. (assuming that $\alpha$ is irrational)
+
+The proof needs some preperations.
+\begin{silentlem} A dynamical system $(X,f)$ is minimal (every orbit is dense) iff there is no closed $f$-invariant proper subset of $X$.
+\end{silentlem}
+\begin{proof} 
+		$''\Longrightarrow''$ Assume that every Orbit is dense. Assume that we have a closed non-empty $f$-invariant subset. Take $x\in C$. Then $\O(x)\subset C$. As $C$ is closed we have $X=\overline{\O(x)}\subset C$ and $C$ is no proper subset of $X$.
+
+		$''\Longleftarrow''$ Assume there is no closed $f$-invariant proper subsets.
+		Then take $x$ and define $C := \overline{\O(x)}$. $C$ is $f$-invariant as for any limit point $y$ - that is a point such that $f^{n_k} \overset{k\rightarrow\infty}{\longrightarrow} y$ -  
+		we also have that $f(f^{n_k}) \overset{k\rightarrow\infty}{\longrightarrow} f(y)$ as $f$ is assumed to be continuos. Clearly $\O(x)$ is $f$-invariant as well.
+		Therefore, $f(y)\in C$.
+	\end{proof}
+\begin{silentdefn}
+	If a subset $A\subset X$ is non-empty, closed and $f$-invariant $(A,f)$ is called a \emph{sub-system}. $(A,f)$ is called \emph{minimal} sub-system if it has no proper sub-system.
+\end{silentdefn}
+\begin{silentlem}
+	Every compact topological dynamical system has a minimal subsystem.
+\end{silentlem}
+\begin{proof}
+	Let $M$ be the set of sub-systems of $(X,f)$. This set is non-empty, as it contains $(X,f)$. The set $M$ can be ordered by the following relation: we write that $(A,f)\leq(A',f)$ whenever $A\supset A'$. For a chain $(A_i,f)$ of $M$ we have that $\bigcap_iA_i$ is closed as all $A_i$ are closed. $\bigcap_iA_i$ is non-empty by \emph{Cantor's intersection theorem}\footnote{https://en.wikipedia.org/wiki/Cantor\%27s\_intersection\_theorem}
+
+	\subclaim1 $\bigcap_iA_i$ is $f$-invariant. \\
+	Let $x\in \bigcap_iA_i$ then $x\in A_i$ for all $i$. As the $A_i$ are $f$-invariant $f(x)\in A_i$ for all $i$. Then $f(x)\in \bigcap_iA_i$ and thus $\bigcap_iA_i$ is $f$-invariant.
+		
+	Hence, for every chain $\{(A_i,f)\}$ of $M$ $((\bigcap_iA_i),f)$ is a maximal element.
+	By Zorn's Lemma $M$ has a maximal element. This maximal element is a minimal sub-system of $(X,f)$.
+\end{proof}
+As $\T2$ is compact there exists a minimal sub-system $(S,F_{\alpha})$ of $(\T2,F_{\alpha})$. Take $x\in S$. As $\alpha$ is irrational we have $\S1\subseteq \pr_1(\overline{\O(x)})\subseteq \pr_1(S)$ as $\pr_1$ is a closed mapping, $S$ is closed and $F_{\alpha}$-invariant. Hence, for every $(x_1,y_1)\in \T2$ there is an $(x_1,z)$ whose Orbit is dense. 
+To show that every point has a dense Orbit we define a map
+\begin{align}
+	\phi_b : &\T2 \rightarrow \T2 \\
+	       &(x,y)\mapsto (x,y+b)
+\end{align}
+which is a homeomorphism on $\T2$. Furthermore it is a conjugacy for all $\alpha$ as we have
+\begin{align}
+	\phi_b \circ F_{\alpha} (x,y) &= \phi_b (x+\alpha, y +x ) \\
+				    &= (x+\alpha, y+x+b) \\
+				    &=F_{\alpha}(x,y+b) \\
+				    &=F_{\alpha} \circ \phi_b (x,y)
+\end{align}
+As we have already shown conjugacies preserve dense orbits. We can now conclude the claim. Let $(x_1,y) \in \T2$ be arbitrary. Take $z$ such that $(x_1,z)\in \T2$ has a dense Orbit. We have that $\phi_{y-z}(x_1,z) = (x_1,y)$. As $\phi_{y-z}$ is a conjugacy $(x_1,y)$ has a dense Orbit.
+\qed \medskip
+
+\teilaufgabe{b}
+\claim Take the setting of exercise 3. If $f:X\rightarrow X$ is topologically mixing than $g:Y\rightarrow Y$ is topologically mixing.
+\begin{proof}
+	Let $U,V\subset Y$ be nonempty open sets. As $\phi$ is continuous and onto we have that $\phi^{-1}(U),\phi^{-1}(V)$ are nonempty open subsets of $X$. As we assumed $X$ to be topologically mixing there is an $n\in \N$ such that 
+	\begin{align}
+		f^{-m}(\phi^{-1}(U))\cap \phi^{-1}(V) \neq \emptyset \text{ for all } m\geq n.
+	\end{align}
+	By that we can conclude
+	\begin{align}
+		\emptyset &\neq \phi(f^{-m}(\phi^{-1}(U)\cap\phi^{-1}(V) \\
+			  &\subseteq \phi\circ f^{-m}\circ \phi^{-1}(U)\cap \phi(\phi^{-1}(V)) \\
+			  &= \phi\circ (\phi\circ f^m)^{-1}(U) \cap V \\
+			  &= \phi \circ (g^m \circ \phi)^{-1}(U)\cap V \\
+			  &= \phi \circ \phi^{-1}\circ g^{-m}(U)\cap V \\
+			  &= g^{-m}(U) \cap V,
+		\text{ for all } m\geq n.
+	\end{align}
+	Hence if $f$ is topologically mixing than also $g$ is topologically mixing.
+\end{proof}
+
+\claim $R_{\alpha}$ is not topologically mixing.
+\begin{proof}
+	Let $a,b,c \in \S1$ be unequal points.
+	Consider the three intervalls $A = (a,b), B=(b,c), C=(c,a)$. As $R_{\alpha}$ is continuous it maps intervalls to intervalls. Hence, if for $Y\in\{A,B,C\}$ we have for each $X\in\{A,B,C\}$ that $R_{\alpha}(Y)\cap X\neq \emptyset$ than we must also have that $R_{\alpha}(Y)$ contains either $A, B$ or $C$.
+
+	\textbf{Wlog} $Y=A$ and $R_{\alpha}(A) \supset B$. Then $A\supset R_{\alpha}^{-1}(B)$, as $R_{\alpha}$ is bijective. Clearly $A,B$ and $C$ are pairwise disjoint.\\
+	Hence, $R_{\alpha}(C)$ and $B$ are disjoint as well.
+	Therefore, for any $\alpha$ we can give a pair $X,Y\in\{A,B,C\}$ such that 
+	\begin{align}\label{alphalink}
+		R_{\alpha}(Y)\cap X = \emptyset.
+	\end{align} 
+	
+	If for any $\beta$ $R_{\beta}$ was topologically mixing there would be an $m\in \N$ such that $R_{\beta}^{n}(Y) \cap X\neq\emptyset$ for all $n \geq m $ and $Y,X \in \{A,B,C\}$.
+
+	But as $R_{\beta}^n = R_{(n\cdot\beta)}$ and $\alpha$ in (\ref{alphalink}) was arbitrary we have a contradiction.
+
+Therefore, $R_{\alpha}$ is not topologically mixing.
+\end{proof}
+\teilaufgabe{c} \claim $F_{\alpha}$ is not isometric.
+\begin{proof}
+	Take $(0,0)\in \T2$ and $(\epsilon,0)\in\T2)$ with $|\epsilon| < \frac{1}{2}$. Then we have 
+	\begin{align}
+		\inf_{p\in\Z^2}|(\epsilon,0) - (0,0) + p| = \epsilon
+	\end{align}.
+	but also 
+	\begin{align}
+		\inf_{p\in\Z^2}|F_{\alpha}(\epsilon,0) - F_{\alpha}(0,0) + p| = \sqrt{2} \epsilon.
+	\end{align}
+	Hence, $F_{\alpha}$ is not isometric. 
+\end{proof}
+\aufgabe5
+\teilaufgabe{1.} $f(x)=x$ and $g(x)=x^2$ are not topologically conjugate. 
+\begin{proof}
+	Every $x\in\R$ is a fixpoint of $f$. However, $g$ only has the fixpoints $\{0,1\}$ and the periodic point $-1$. If $f$ and $g$ were topologically conjugate the Orbits of their periodic points must correspond. This is not possible. Therefore, $f$ and $g$ are not topologically conjugate.
+\end{proof}
+
+\teilaufgabe{2.} $f(x)=\frac{1}{3}x$ and $g(x)= 2x$ are not topologically conjugate
+\begin{proof}
+	Both, $f$ and $g$, possess only one periodic point at $0$; it also happens to be a fixpoint. Notice that for any $x \neq 0$ it holds true that $f^n(x) \overset{n\rightarrow\infty}{\longrightarrow} 0$ and $|g^n(x)| \overset{n\rightarrow\infty}{\longrightarrow} \infty$. Therefore, if we had a conjugacy $\phi$ then we would also have
+	\begin{align}
+		0 = \lim_{n\to\infty} f^n\circ \phi (x) &= \lim_{n\to \infty} \phi\circ g^n(x)  \\
+							&=\phi\circ\lim_{n\to\infty}g^n (x).
+	\end{align}
+This holds only true for $\phi = 0$, which is not bijective on $\R$.
+\end{proof}
+\teilaufgabe{3.} $f(x)=2x$ and $g(x)=x^3$ are not topologically conjugate.
+\begin{proof}
+	$f$ does only possess a periodic point at $0$ (fixpoint). However, $g$ has periodic points $\{-1 ,0 , 1\}$ and as a conjugacy has to preserve the periodicity of points there $f$ and $g$ cannot be topologically conjugate. 
+\end{proof}
+\aufgabe6
+\teilaufgabe{a}
+\end{document}
