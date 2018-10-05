@@ -1,0 +1,215 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,mathtools,sansmath,wasysym}
+\usepackage{cleveref}
+\usepackage{tikz-cd}
+\usepackage{url}
+
+%Commands
+\newcommand{\contradiction}{\lightning}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\J}{\mathfrak{J}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\m}{\mathfrak{m}}
+\newcommand{\p}{\mathfrak{p}}
+\newcommand{\nr}{\mathfrak{N}}
+\newcommand{\im}{\mathrm{im}}
+\newcommand{\lead}{\mathrm{lead}}
+\newcommand{\codeg}{\mathrm{deg}}
+\makeatletter
+\def\fall#1{\forall #1\@ifnextchar\bgroup{\,,\fall}{:\,}}
+\makeatother
+\renewcommand{\S}[1]{\mathbb{S}^{#1}}
+\newcommand{\T}[1]{\mathbb{T}^{#1}}
+\newcommand{\inv}[1]{{#1}^{-1}}
+\renewcommand{\O}{\mathcal{O}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\pr}{\mathrm{pr}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\foukof}[1]{\hat{\varphi}_{{#1}}}
+\newcommand{\e}[1]{\mathsf{e}^{#1}}
+\renewcommand{\i}{\mathsf{i}}
+\newcommand{\claim}
+{\underline{\textit{Claim:}}\hspace{0,2cm}}
+\newcommand{\subclaim}[1]
+{
+
+	\vspace*{0,2cm}
+	\textit{Claim}({#1}):
+}
+\newcommand{\subqed}[1]{\hfill\textsf{qed}({#1})}
+\newcommand{\subproof}{
+
+\noindent\textit{proof}.\hspace{0,1cm}
+}
+%Aufgaben-Command
+\newcommand{\aufgabe}[1]{
+{
+	\vspace*{0.5cm}
+	\noindent\textsf{\textbf{Exercise #1}}
+	\vspace*{0.2cm}
+
+}
+}
+%unteraufgabe
+\newcommand{\unteraufgabe}[1]{
+{
+	\textsf{(#1)}
+}
+}
+%Teilaufgabe
+\newcommand{\teilaufgabe}[1]{
+{       
+
+	\noindent\hspace*{0,1 cm}\textbf{#1)}
+}
+}
+
+\newcommand{\induktionsanfang}{
+{
+	\vspace*{0.1cm}
+	\noindent
+	\textsf{Induktionsanfang:}
+}
+}
+
+\newcommand{\induktionsschritt}{
+{
+	\vspace*{0.1cm}
+	\noindent
+	\textsf{Induktionsschritt:}
+}
+}
+%Umgebungen
+\newtheorem{thm}{Theorem}[section] 
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem*{silentdefn}{Definition}
+\newtheorem*{silentthm}{Theorem}
+\newtheorem*{silentlem}{Lemma}
+\theoremstyle{plain}
+\newtheorem{cor}[thm]{Korollar}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{propo}[thm]{Proposition}
+\newtheorem{axiom}[thm]{Axiom}
+\theoremstyle{remark}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem*{silentremark}{Remark}
+\newtheorem{example}[thm]{Example}
+
+\title{Homework No.2}
+\author{Philipp Stassen}
+\begin{document}
+\maketitle
+\aufgabe1 Let $T_A$ be the endomorphism of $\T2$ by the matrix $A = 
+\begin{pmatrix}
+	2 &0 \\
+	0 &3
+\end{pmatrix}$
+
+We have that $\det(A) = 6$ and the eigenvalues are $x_1 = 2$ resp. $x_2= 3$. Clearly on $A^{-1} = 
+\begin{pmatrix}
+	\frac{1}{2} &0\\
+	0&\frac{1}{3}
+\end{pmatrix}$.
+
+\subclaim1 $h(f)\geq \log2+\log3$
+\subproof
+Let $\varepsilon < \frac{1}{6}$. As the largest eigenvalue of $A$ is $x_2 = 3$ we have for any point $x\in \T2$ that $T_A\upharpoonright B(x,\varepsilon)$ is injective.
+Then we can cover $\T2$ by $d_n$-open Balls $B_n(p_i,\varepsilon)$. We have that
+\begin{align}
+	B_n(p_i,\varepsilon) = \bigcap_{k=0}^{n-1}T_{A}^{-k}B(T_{A}^k(p_i),\varepsilon)
+\end{align}
+and therefore we can proceed similar as in \emph{Example 3.15}\footnote{Dynamical systems an introduction Chapter 3.4.3 - L. Barreira, C. Valls}. Note that here $T_A^{-k}$ denotes the inverse function on the restricted domain, not the preimage. We have $T_A^{-1}=T_{A^{-1}}$ (on a restricted domain such that $T_A$ is invertible).
+
+There exists an constant $C>0$ such that the area of $B_n(p_i,\varepsilon)$ is smaller then $C 2^{-n}3^{-n}\varepsilon^2$. 
+
+%To be a bit more precise, actually already $T_{A}^{-(n-1)}B(T_{A}^{n-1}(p_i),\varepsilon)$ has an area that is smaller than $C2^-{n}3^{-n}\varepsilon^2$.
+Thus, $M(n,\varepsilon)\geq \frac{1}{C 2^{-n}3^{-n}\varepsilon^2}$ and by taking limits we gets we get
+\begin{align}
+	h(f)&=\lim_{\varepsilon\to 0}\liminf_{n\to\infty}\frac{1}{n}\log M(n,\varepsilon)\\
+	&\geq \lim_{\varepsilon\to 0}\liminf_{n\to\infty}\frac{1}{n}\log \left(\frac{1}{C 2^{-n}3^{-n}\varepsilon^2}\right)\\
+										  &=\lim_{\varepsilon\to 0}\liminf_{n\to\infty}\left(\frac{1}{n}\log \left(\frac{1}{C \varepsilon^2}\right)+\frac{1}{n}n\log2+\frac{1}{n}n\log3\right) \\
+	&=\log2+\log3
+\end{align}
+\subqed1
+\subclaim2 $h(f)\leq \log2+\log3$
+\subproof
+On the other hand we consider a partition of $\T2$ by parallelograms $P_i$ with side length $3^{-n}\varepsilon$ and $2^{-n}\varepsilon$ along the eigendirections, i.e. rectangles as the eigendirections are $(1,0)$ and $(0,1)$. 
+
+There is a constant $D>1$ (I think $\sqrt2$ would be a precise choice) such that the $d_n$-Diameter of each $P_i$ is smaller than $D\varepsilon$.
+Furthermore we have that the area of each $P_i$ is at least $D^{-1}2^{-n}3^{-n}\varepsilon^2$.
+Therefore we can give the bound.
+\begin{align}
+	C(n,D\varepsilon)\leq \frac{1}{D^{-1}2^{-n}3^{-n}\varepsilon^2} = D\varepsilon^{-2}2^n3^n
+\end{align}
+Therefore, we can conclude
+\begin{align}
+	h(f)&=\lim_{\epsilon\to 0}\lim_{n\to\infty}\frac{1}{n}\log C(n,\varepsilon) \\
+	    &=\lim_{D\epsilon\to 0}\lim_{n\to\infty}\frac{1}{n}\log C(n,D\varepsilon)\\
+	    &\leq\lim_{\epsilon\to 0}\lim_{n\to\infty}\frac{1}{n}\log (D\varepsilon^{-2}2^n3^n) \\
+	    &=\lim_{\epsilon\to 0}\lim_{n\to\infty}(\frac{1}{n}\log (D\varepsilon^{-2})+\frac{1}{n}\log(2^n)+\frac{1}{n}\log(3^n) \\
+	    &= \log2 + \log 3
+\end{align}
+\subqed2
+
+Hence, we can conclude that $h(f)=\log2+\log3$. \qed
+
+\aufgabe2
+Let $f:X\to X$ be a continuous map of a compact metric space, let $k\in\N$. 
+\teilaufgabe{a}
+Let $d_{n,f}=d_n$ and $N_f(n,\varepsilon)=N(n,\varepsilon)$.
+
+\claim $d_{n,f^k}(x,y)\leq d_{nk,f}(x,y)$, and thus $N_{f^k}(n,\varepsilon)\leq N_f(nk,\varepsilon)$.
+\begin{proof}
+	We have hat 
+	\begin{align}
+		d_{n,f^k}(x,y) &= \max\{d\left(f^{ki}(x),f^{ki}(y)\right)|i\leq n-1\} \\
+			       &\leq\max\{d\left(f^{i}(x),f^{i}(y)\right)|i\leq nk-1\} \\ 
+			       &= d_{nk,f}(x,y)
+	\end{align}
+	Now it follows that if $p_1,...,p_n$ are points such that $d_{n,f^k}(p_i,p_j)\geq\varepsilon$ for $i\neq j$, we also have $d_{nk,f}(p_i,p_j)\geq d_{n,f^k}(p_i,p_j) \geq\varepsilon$. Hence, as 
+	\begin{align}
+		N_f(nk,\varepsilon)&= \max\{m\in\N| \exists p_1 ... p_m : \bigwedge_{i\neq j} d_{nk}(p_i,p_j)\geq\varepsilon\} \\
+				 &\geq\max\{m\in\N| \exists p_1 ... p_m : \bigwedge_{i\neq j} d_{n,f^k}(p_i,p_j)\geq\varepsilon\}\\
+				 &= N_{f^k}(n,\varepsilon)
+	\end{align}.
+\end{proof}
+\teilaufgabe{b} \claim $h(f^k)\leq kh(f)$.
+\begin{proof}
+	We have that
+\begin{align}
+	\frac{\log N_{f^k}(n,\varepsilon)}{n} \leq \frac{\log N_f(kn,\varepsilon)}{n} = \frac{\log N_f(m(n),\varepsilon)}{\frac{1}{k}m(n)} = \frac{k\log N_f(m(n),\varepsilon)}{m(n)}
+\end{align}
+where $m(n):=kn$ is a sequence in $\N$. Note that 
+\begin{align}
+	\limsup_{n\to\infty}\frac{k\log N_f(m(n),\varepsilon)}{m(n)}\leq \limsup_{n\to\infty}\frac{k\log N_f(n,\varepsilon)}{n}
+\end{align} 
+as the first is a subsequence of the latter one. This lets us conclude
+	\begin{align}
+		h(f^k) &= \lim_{\varepsilon\to0}\limsup_{n\to\infty}\frac{\log N_{f^k}(n,\varepsilon)}{n} \\
+		       &\leq\lim_{\varepsilon\to0}\limsup_{n\to\infty}\frac{\log N_f(kn,\varepsilon)}{n} \\
+		       &\leq\lim_{\varepsilon\to0}\limsup_{n\to\infty}\frac{k\log N_f(m(n),\varepsilon)}{m(n)} \\
+		       &\leq\lim_{\varepsilon\to0}\limsup_{n\to\infty}\frac{\log N_f(n,\varepsilon)}{n}k = kh(f)
+	\end{align}
+\end{proof}
+\teilaufgabe{c} \claim $\lim_{\varepsilon\to 0}\limsup_{n\to\infty}\frac{1}{n}\log N_f(nk,\varepsilon)\leq h(f^k)$
+\begin{proof}
+	\subclaim1 For every $\varepsilon > 0$ exists $\delta(\varepsilon) \in (0,\varepsilon)$ such that $d(x,y)<\delta(\varepsilon)\Longrightarrow d_{k,f}(x,y)<\varepsilon$ for every $x,y\in X$. 
+	\subproof As $X$ is compact and $f$ is continuous it follows that $f$ and all $f^n$ are uniformly continuous. Hence we can define $\delta(\varepsilon):=\min_{0\leq i\leq k}\{\delta(\varepsilon, i)\,|\, \fall{x,y\in X}d(x,y)<\delta(\varepsilon,i) \Longrightarrow d_{i,f}(x,y)<\varepsilon\}$. In case that $\delta(\varepsilon)>\varepsilon$ we redefine it to be $\frac{\varepsilon}{2}$. Therefore, we can assume$\delta(\varepsilon)\in(0,\varepsilon)$.
+	\subqed1
+
+	\subclaim2 $d_{nk}(x,y) \geq \varepsilon \Longrightarrow d_{n,f^k}(x,y)\geq \delta(\varepsilon)$
+	\subproof
+	Note that $d_{nk}(x,y)=\max\{d_k(f^{ik}(x),f^{ik}(y)) \,|\, 0\leq i\leq n-1 \}$.
+	Hence, we know that if $d_{nk}(x,y)\geq \varepsilon$ then $d_k(f^{ik}(x),f^{ik}(y))\geq \varepsilon$ for some $i\leq n-1$ and therefore $d(f^{ik}(x),f^{ik}(y))>\delta(\varepsilon)$ by the uniform continuity of $f$. Thus, $d_{n,f^k}(x,y)\geq d(f^{ik}(x),f^{ik}(y))\geq \delta(\varepsilon)$ as claimed. \subqed2
+
+	\subclaim3 $N(nk,\varepsilon)\leq N_{f^k}(n,\delta(\varepsilon))$
+	\subproof Let $p_1,...,p_n$ be a $nk,\varepsilon$ - spanning set for $f$, i.e. there $d_{nk}(p_i,p_j)\geq \varepsilon$ for all $i\neq j\leq n$. By Claim(2) we also have $d_{n,f^k}(p_i,p_j)\geq \varepsilon$ for all $i\neq j\leq n$. Hence $p_1,...,p_n$ is an $n,\delta(\varepsilon)$ - spanning set for $f^k$. \subqed3 \medskip
+
+	Now we can conclude the \underline{claim}
+\end{proof}
+\end{document}
